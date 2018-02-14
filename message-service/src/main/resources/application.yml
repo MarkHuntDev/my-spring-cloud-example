@@ -1,0 +1,15 @@
+server:
+  port: ${PORT:1111}
+
+spring:
+  application:
+    name: message-service
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+ribbon:
+  eureka:
+    enabled: true
