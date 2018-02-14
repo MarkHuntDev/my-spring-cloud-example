@@ -29,3 +29,19 @@ greeting-service:
 celebrity-service:
   ribbon:
     listOfServers: localhost:3333
+
+---
+spring:
+  profiles: stub
+
+ribbon:
+  eureka:
+    enabled: false
+
+greeting-service:
+  ribbon:
+    listOfServers: localhost:8500
+
+celebrity-service:
+  ribbon:
+    listOfServers: localhost:8500
