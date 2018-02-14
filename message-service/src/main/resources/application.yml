@@ -13,3 +13,19 @@ eureka:
 ribbon:
   eureka:
     enabled: true
+
+---
+spring:
+  profiles: local
+
+ribbon:
+  eureka:
+    enabled: false
+
+greeting-service:
+  ribbon:
+    listOfServers: localhost:2222
+
+celebrity-service:
+  ribbon:
+    listOfServers: localhost:3333
