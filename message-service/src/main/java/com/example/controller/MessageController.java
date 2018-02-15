@@ -6,6 +6,7 @@ import com.example.model.Celebrity;
 import com.example.model.Greeting;
 import com.example.model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,7 +29,7 @@ public class MessageController {
         this.celebrityClient = celebrityClient;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Message message(@RequestParam("greetingId") int greetingId, @RequestParam("celebrityId") int celebrityId) {
         Greeting greeting = greetingClient.greeting(greetingId);
         Celebrity celebrity = celebrityClient.celebrity(celebrityId);

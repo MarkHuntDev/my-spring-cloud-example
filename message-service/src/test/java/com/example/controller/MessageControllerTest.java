@@ -20,7 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-public class CelebrityControllerTest {
+public class MessageControllerTest {
 
     private static final String GREETING_GOOD_AFTERNOON = "Good afternoon";
     private static final String CELEBRITY_ORNELLA_MUTI = "Ornella Muti";
@@ -45,7 +45,7 @@ public class CelebrityControllerTest {
     }
 
     @Test
-    public void shouldReturnRandomGreeting() throws Exception {
+    public void shouldReturnGoodAfternoonOrnellaMutiMessage() throws Exception {
 
         when(greetingClient.greeting(1)).thenReturn(new Greeting().setValue(GREETING_GOOD_AFTERNOON));
         when(celebrityClient.celebrity(1)).thenReturn(new Celebrity().setName(CELEBRITY_ORNELLA_MUTI));
