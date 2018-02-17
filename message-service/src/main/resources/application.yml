@@ -40,8 +40,8 @@ ribbon:
 
 greeting-service:
   ribbon:
-    listOfServers: localhost:8500
+    listOfServers: greeting-service:8080
 
 celebrity-service:
   ribbon:
-    listOfServers: localhost:8500
+    listOfServers: celebrity-service:8080
