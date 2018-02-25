@@ -1,0 +1,11 @@
+server:
+  port: ${PORT:9999}
+
+spring:
+  application:
+    name: authorization-server
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
