@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Response;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,7 @@ import java.util.Map;
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Slf4j
 public class AuthorizationServerEndpointTest {
 
     @Value("http://localhost:${local.server.port}")
@@ -32,7 +34,7 @@ public class AuthorizationServerEndpointTest {
         params.put("username", "user");
         params.put("password", "pass");
 
-        Response jwt = RestAssured
+        Response jwtResponse = RestAssured
                 .given().auth().preemptive().basic("test-client", "test-secret")
                   .and()
                 .with()
@@ -40,7 +42,9 @@ public class AuthorizationServerEndpointTest {
                 .when()
                 .post(this.authServerUrl + "/oauth/token");
 
-        assertEquals(200, jwt.getStatusCode());
-        assertNotNull(jwt.jsonPath().get("access_token"));
+        assertEquals(200, jwtResponse.getStatusCode());
+
+        assertNotNull(jwtResponse.jsonPath().get("access_token"));
+        assertNotNull(jwtResponse.jsonPath().get("testProperty"));
     } // @formatter:on
 }
