@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.model.Celebrity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,13 +37,21 @@ public class CelebrityController {
         return celebrities.get(id);
     }
 
-
     @RequestMapping(value = "/random", method = RequestMethod.GET)
     public Celebrity randomCelebrity() {
         if (celebrities.isEmpty()) {
             return new Celebrity();
         }
         return celebrities.get(randomCelebrityIndex());
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(value = "/random-with-test-property")
+    public Celebrity randomCelebrityWithTestProperty() {
+        Celebrity celebrity = randomCelebrity();
+        String testPropertyValue = "";
+        celebrity.setName(celebrity.getName() + " ; Test Property Value: " + testPropertyValue);
+        return celebrity;
     }
 
     private static int randomCelebrityIndex() {

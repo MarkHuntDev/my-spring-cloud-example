@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -16,7 +18,7 @@ import java.util.List;
 @Configuration
 public class TokenConfig {
 
-    @Value("${signing-key:oui214hmui23o4hm1pui3o2hp4m1o3h2m1o43}")
+    @Value("${signing-key:test123}")
     private String signingKey;
 
     private List<TokenEnhancer> tokenEnhancers;
@@ -36,6 +38,14 @@ public class TokenConfig {
     @Bean
     public TokenStore tokenStore() {
         return new JwtTokenStore(accessTokenConverter());
+    }
+
+    @Bean
+    @Primary
+    public DefaultTokenServices tokenServices() {
+        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
+        defaultTokenServices.setTokenStore(tokenStore());
+        return defaultTokenServices;
     }
 
     @Bean
