@@ -1,6 +1,6 @@
 package com.example.config.oauth2;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -56,7 +56,10 @@ public class TokenConfig {
     }
 
     private List<TokenEnhancer> allTokenEnhancers() {
-        TokenEnhancer[] restTokenEnhancers = this.tokenEnhancers.toArray(new TokenEnhancer[this.tokenEnhancers.size()]);
-        return Lists.asList(accessTokenConverter(), restTokenEnhancers);
+        return ImmutableList
+                .<TokenEnhancer>builder()
+                .addAll(this.tokenEnhancers)
+                .add(accessTokenConverter())
+                .build();
     }
 }
