@@ -28,7 +28,7 @@ public class AuthorizationServerEndpointTest {
     @Test
     public void shouldObtainJwtAccessToken() { // @formatter:off
 
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("grant_type", "password");
         params.put("client_id", "test-client");
         params.put("username", "user");
