@@ -1,9 +1,15 @@
 package com.example.controller;
 
 import com.example.model.Celebrity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 @RestController
@@ -24,6 +31,12 @@ public class CelebrityController {
             new Celebrity().setName("Adriano Chelentano")
     );
 
+    private TokenStore tokenStore;
+
+    @Autowired
+    public void setTokenStore(TokenStore tokenStore) {
+        this.tokenStore = tokenStore;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
@@ -49,7 +62,14 @@ public class CelebrityController {
     @RequestMapping(value = "/random-with-test-property")
     public Celebrity randomCelebrityWithTestProperty() {
         Celebrity celebrity = randomCelebrity();
-        String testPropertyValue = "";
+
+        OAuth2Authentication auth = (OAuth2Authentication) SecurityContextHolder.getContext().getAuthentication();
+        OAuth2AuthenticationDetails authDetails = (OAuth2AuthenticationDetails) auth.getDetails();
+        OAuth2AccessToken accessToken = tokenStore.readAccessToken(authDetails.getTokenValue());
+        Map<String, Object> jwtAdditionalInformation = accessToken.getAdditionalInformation();
+
+        String testPropertyValue = (String) jwtAdditionalInformation.get("testProperty");
+
         celebrity.setName(celebrity.getName() + " ; Test Property Value: " + testPropertyValue);
         return celebrity;
     }
