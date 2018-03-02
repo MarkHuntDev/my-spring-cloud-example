@@ -38,7 +38,7 @@ public class CelebrityController {
         this.tokenStore = tokenStore;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public List<Celebrity> celebrities() {
         return celebrities;
@@ -50,7 +50,7 @@ public class CelebrityController {
         return celebrities.get(id);
     }
 
-    @RequestMapping(value = "/random", method = RequestMethod.GET)
+    @RequestMapping(value = "/random", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Celebrity randomCelebrity() {
         if (celebrities.isEmpty()) {
             return new Celebrity();
@@ -59,7 +59,7 @@ public class CelebrityController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @RequestMapping(value = "/random-with-test-property")
+    @RequestMapping(value = "/random-with-test-property", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Celebrity randomCelebrityWithTestProperty() {
         Celebrity celebrity = randomCelebrity();
 
