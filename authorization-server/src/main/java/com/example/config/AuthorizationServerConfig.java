@@ -8,6 +8,7 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
@@ -52,4 +53,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
           .authenticationManager(this.authenticationManager)
           .tokenEnhancer(this.tokenEnhancerChain);
     } // @formatter:on
+
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer security) {
+        security.checkTokenAccess("permitAll()");
+    }
 }
