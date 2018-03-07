@@ -7,7 +7,7 @@ import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Response;
 import org.junit.Test;
 
-public class CelebrityControllerIT extends BaseIntegrationTest {
+public class CelebrityControllerITViaHttp extends BaseIntegrationTest {
 
     @Test
     public void testCelebrity() {
