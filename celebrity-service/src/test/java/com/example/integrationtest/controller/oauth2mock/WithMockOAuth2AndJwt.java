@@ -5,9 +5,8 @@ import org.springframework.security.test.context.support.WithSecurityContext;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-// todo: give compliance name
 @Retention(RetentionPolicy.RUNTIME)
-@WithSecurityContext(factory = WithMockOAuth2ScopeSecurityContextFactory.class)
-public @interface WithMockOAuth2Scope {
-    String scope() default "";
+@WithSecurityContext(factory = WithMockOAuth2AndJwtSecurityContextFactory.class)
+public @interface WithMockOAuth2AndJwt {
+    String[] roles() default {"ROLE_USER"};
 }

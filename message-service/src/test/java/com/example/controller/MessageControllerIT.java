@@ -13,6 +13,8 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -26,6 +28,8 @@ import java.io.IOException;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("stub")
 public class MessageControllerIT {
+
+    private static final Logger log = LoggerFactory.getLogger(MessageControllerIT.class);
 
     @ClassRule
     public static HoverflyRule hoverflyRule = HoverflyRule
@@ -54,9 +58,9 @@ public class MessageControllerIT {
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
         try {
             JacksonConfig.staticMappingJackson2HttpMessageConverter().write(object, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
-        } catch (IOException e) {
-            // todo:
-            e.printStackTrace();
+        } catch (IOException ex) {
+            log.error(ex.getMessage(), ex);
+            throw new RuntimeException(ex);
         }
         return mockHttpOutputMessage.getBodyAsString();
     }

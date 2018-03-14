@@ -1,7 +1,7 @@
 package com.example.integrationtest.controller;
 
 import com.example.controller.CelebrityController;
-import com.example.integrationtest.controller.oauth2mock.WithMockOAuth2Scope;
+import com.example.integrationtest.controller.oauth2mock.WithMockOAuth2AndJwt;
 import com.example.model.Celebrity;
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,7 +23,7 @@ public class CelebrityControllerITViaJava {
         this.celebrityController = celebrityController;
     }
 
-    @WithMockOAuth2Scope
+    @WithMockOAuth2AndJwt
     @Test
     public void testRandomCelebrityWithTestProperty() {
         Celebrity randomCelebrityWithTestProperty = celebrityController.randomCelebrityWithTestProperty();

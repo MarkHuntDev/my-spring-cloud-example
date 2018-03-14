@@ -15,14 +15,12 @@ import org.springframework.security.test.context.support.WithSecurityContextFact
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
-// todo: give compliance name
-// todo: refactoring
 @Component
-public class WithMockOAuth2ScopeSecurityContextFactory implements WithSecurityContextFactory<WithMockOAuth2Scope> {
+public class WithMockOAuth2AndJwtSecurityContextFactory implements WithSecurityContextFactory<WithMockOAuth2AndJwt> {
 
     private AuthorizationServerTokenServices tokenServices;
 
@@ -32,31 +30,36 @@ public class WithMockOAuth2ScopeSecurityContextFactory implements WithSecurityCo
     }
 
     @Override
-    public SecurityContext createSecurityContext(WithMockOAuth2Scope mockOAuth2Scope) {
+    public SecurityContext createSecurityContext(WithMockOAuth2AndJwt mockOAuth2AndJwt) {
         SecurityContext context = SecurityContextHolder.createEmptyContext();
 
-        Set<String> scope = new HashSet<>();
-        scope.add(mockOAuth2Scope.scope());
+        OAuth2Request oAuth2Request = oAuth2Request(mockOAuth2AndJwt);
+        OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, null);
+        OAuth2AccessToken accessToken = tokenServices.createAccessToken(oAuth2Authentication);
+        oAuth2Authentication.setDetails(authenticationDetails(accessToken));
+        context.setAuthentication(oAuth2Authentication);
 
-        GrantedAuthority admin = new SimpleGrantedAuthority("ROLE_ADMIN");
+        return context;
+    }
 
+    private OAuth2Request oAuth2Request(WithMockOAuth2AndJwt mockOAuth2AndJwt) {
+        return new OAuth2Request(null, null, authorities(mockOAuth2AndJwt.roles()), true, null, null, null, null, null);
+    }
 
-        OAuth2Request request = new OAuth2Request(null, null, Collections.singletonList(admin),
-                true, scope, null, null, null, null);
+    private Collection<? extends GrantedAuthority> authorities(String[] roleNames) {
+        return Arrays.stream(roleNames)
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+    }
 
-
-        OAuth2Authentication auth = new OAuth2Authentication(request, null);
-
-        OAuth2AccessToken accessToken = tokenServices.createAccessToken(auth);
-
+    private OAuth2AuthenticationDetails authenticationDetails(OAuth2AccessToken accessToken) {
         HttpServletRequest httpServletRequest = new MockHttpServletRequest();
         httpServletRequest.setAttribute(OAuth2AuthenticationDetails.ACCESS_TOKEN_TYPE, OAuth2AccessToken.BEARER_TYPE);
         httpServletRequest.setAttribute(OAuth2AuthenticationDetails.ACCESS_TOKEN_VALUE, accessToken.getValue());
-        OAuth2AuthenticationDetails details = new OAuth2AuthenticationDetails(httpServletRequest);
-        auth.setDetails(details);
+        return new OAuth2AuthenticationDetails(httpServletRequest);
+    }
 
-        context.setAuthentication(auth);
+    private static class OAuth2AuthenticationBuilder {
 
-        return context;
     }
 }

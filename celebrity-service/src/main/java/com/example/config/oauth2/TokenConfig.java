@@ -10,7 +10,6 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @Configuration
 public class TokenConfig {
 
-    // todo: need to use asymmetric key
     @Value("${signing-key:test123}")
     private String signingKey;
 
