@@ -8,14 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
-import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
-import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
-import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
@@ -29,60 +23,16 @@ import java.util.Map;
 
 @Profile("test")
 @Configuration
-@EnableAuthorizationServer
-public class TestAuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+public class TestOAuth2JwtConfig {
 
-    private AuthenticationManager authenticationManager;
     private TokenStore tokenStore;
-
-    @Autowired
-    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
-    }
+    private JwtAccessTokenConverter accessTokenConverter;
+    private List<TokenEnhancer> tokenEnhancers;
 
     @Autowired
     public void setTokenStore(TokenStore tokenStore) {
         this.tokenStore = tokenStore;
     }
-
-    @Override
-    public void configure(final ClientDetailsServiceConfigurer clients) throws Exception { // @formatter:off
-        clients.inMemory()
-          .withClient("test-client")
-          .secret("test-secret")
-          .authorizedGrantTypes("password")
-          .scopes("celebrity-service")
-          .autoApprove(true);
-    } // @formatter:on
-
-    @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) { // @formatter:off
-        endpoints
-          .tokenStore(this.tokenStore)
-          .authenticationManager(this.authenticationManager)
-          .tokenEnhancer(tokenEnhancerChain());
-    } // @formatter:on
-
-    @Override
-    public void configure(AuthorizationServerSecurityConfigurer security) {
-        security.checkTokenAccess("permitAll()");
-    }
-
-    // TOKEN SERVICES
-
-    @Bean
-    @Primary
-    DefaultTokenServices tokenServices() {
-        DefaultTokenServices tokenServices = new DefaultTokenServices();
-        tokenServices.setTokenStore(this.tokenStore);
-        tokenServices.setTokenEnhancer(this.tokenEnhancerChain());
-        return tokenServices;
-    }
-
-    // TOKEN ENHANCERS
-
-    private JwtAccessTokenConverter accessTokenConverter;
-    private List<TokenEnhancer> tokenEnhancers;
 
     @Autowired
     public void setAccessTokenConverter(JwtAccessTokenConverter accessTokenConverter) {
@@ -92,6 +42,15 @@ public class TestAuthorizationServerConfig extends AuthorizationServerConfigurer
     @Autowired
     public void setTokenEnhancers(List<TokenEnhancer> tokenEnhancers) {
         this.tokenEnhancers = tokenEnhancers;
+    }
+
+    @Bean
+    @Primary
+    DefaultTokenServices tokenServices() {
+        DefaultTokenServices tokenServices = new DefaultTokenServices();
+        tokenServices.setTokenStore(this.tokenStore);
+        tokenServices.setTokenEnhancer(this.tokenEnhancerChain());
+        return tokenServices;
     }
 
     @Bean
@@ -128,6 +87,7 @@ public class TestAuthorizationServerConfig extends AuthorizationServerConfigurer
         return ImmutableList
                 .<TokenEnhancer>builder()
                 .addAll(this.tokenEnhancers)
+                // JwtAccessTokenConverter must be at the end of enhancers list
                 .add(this.accessTokenConverter)
                 .build();
     }

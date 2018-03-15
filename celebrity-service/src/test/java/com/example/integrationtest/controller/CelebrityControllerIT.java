@@ -1,7 +1,7 @@
 package com.example.integrationtest.controller;
 
 import com.example.controller.CelebrityController;
-import com.example.integrationtest.controller.oauth2mock.WithMockOAuth2AndJwt;
+import com.example.integrationtest.config.oauth2mock.WithMockOAuth2Jwt;
 import com.example.model.Celebrity;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-public class CelebrityControllerITViaJava {
+public class CelebrityControllerIT {
 
     private CelebrityController celebrityController;
 
@@ -23,8 +23,8 @@ public class CelebrityControllerITViaJava {
         this.celebrityController = celebrityController;
     }
 
-    @WithMockOAuth2AndJwt
     @Test
+    @WithMockOAuth2Jwt(roles = "ROLE_ADMIN")
     public void testRandomCelebrityWithTestProperty() {
         Celebrity randomCelebrityWithTestProperty = celebrityController.randomCelebrityWithTestProperty();
         System.out.println(randomCelebrityWithTestProperty.getName());

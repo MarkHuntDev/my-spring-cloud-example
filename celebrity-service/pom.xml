@@ -59,17 +59,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>com.jayway.restassured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>commons-logging</artifactId>
-                    <groupId>commons-logging</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
         <!-- Utils -->
         <dependency>
             <groupId>org.projectlombok</groupId>
