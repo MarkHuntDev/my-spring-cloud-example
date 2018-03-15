@@ -2,6 +2,7 @@ package com.example.integrationtest.config.oauth2mock;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -34,7 +35,6 @@ public class WithMockOAuth2JwtSecurityContextFactory implements WithSecurityCont
 
     @Override
     public SecurityContext createSecurityContext(WithMockOAuth2Jwt mockOAuth2AndJwt) {
-        SecurityContext context = SecurityContextHolder.createEmptyContext();
 
         OAuth2Request oAuth2Request = OAuth2RequestBuilder
                 .builder()
@@ -49,11 +49,18 @@ public class WithMockOAuth2JwtSecurityContextFactory implements WithSecurityCont
                 .withExtensionProperties(null)
                 .build();
 
-        OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, null);
-        OAuth2AccessToken accessToken = tokenServices.createAccessToken(oAuth2Authentication);
-        oAuth2Authentication.setDetails(authenticationDetails(accessToken));
-        context.setAuthentication(oAuth2Authentication);
+        OAuth2Authentication oAuth2Authentication = OAuth2AuthenticationBuilder
+                .builder()
+                .withOAuth2Request(oAuth2Request)
+                .withAuthentication(null)
+                .build();
 
+        OAuth2AccessToken accessToken = tokenServices.createAccessToken(oAuth2Authentication);
+
+        oAuth2Authentication.setDetails(authenticationDetails(accessToken));
+
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(oAuth2Authentication);
         return context;
     }
 
@@ -208,6 +215,62 @@ public class WithMockOAuth2JwtSecurityContextFactory implements WithSecurityCont
 
         interface BuildStep {
             OAuth2Request build();
+        }
+    }
+
+    private static class OAuth2AuthenticationBuilder {
+
+        static OAuth2RequestStep builder() {
+            return new Steps().startStep();
+        }
+
+        private static class Steps
+                implements
+                StartStep,
+                OAuth2RequestStep,
+                AuthenticationStep,
+                BuildStep {
+
+            private OAuth2Request oAuth2Request;
+            private Authentication authentication;
+
+            @Override
+            public OAuth2RequestStep startStep() {
+                return this;
+            }
+
+            @Override
+            public AuthenticationStep withOAuth2Request(OAuth2Request oAuth2Request) {
+                this.oAuth2Request = oAuth2Request;
+                return this;
+            }
+
+            @Override
+            public BuildStep withAuthentication(Authentication authentication) {
+                this.authentication = authentication;
+                return this;
+            }
+
+            @Override
+            public OAuth2Authentication build() {
+                return new OAuth2Authentication(oAuth2Request, authentication);
+            }
+        }
+
+        interface StartStep {
+            OAuth2RequestStep startStep();
+        }
+
+        interface OAuth2RequestStep {
+            AuthenticationStep withOAuth2Request(OAuth2Request oAuth2Request);
+        }
+
+        interface AuthenticationStep {
+            BuildStep withAuthentication(Authentication authentication);
+        }
+
+        interface BuildStep {
+            OAuth2Authentication build();
         }
     }
 }
