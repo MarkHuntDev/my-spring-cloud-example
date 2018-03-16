@@ -77,6 +77,10 @@ public class WithMockOAuth2JwtSecurityContextFactory implements WithSecurityCont
         return new OAuth2AuthenticationDetails(httpServletRequest);
     }
 
+    /**
+     * Step Builder pattern implementation
+     * for {@link OAuth2Request} creation.
+     */
     private static class OAuth2RequestBuilder {
 
         static RequestParametersStep builder() {
@@ -218,6 +222,10 @@ public class WithMockOAuth2JwtSecurityContextFactory implements WithSecurityCont
         }
     }
 
+    /**
+     * Step Builder pattern implementation
+     * for {@link OAuth2Authentication} creation.
+     */
     private static class OAuth2AuthenticationBuilder {
 
         static OAuth2RequestStep builder() {
