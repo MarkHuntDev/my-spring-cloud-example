@@ -11,6 +11,23 @@
 
     <artifactId>celebrity-service</artifactId>
 
+    <properties>
+
+        <!--
+            These properties replace same placeholders of resource files.
+            Also they're can be overrode by command-line arguments, for example:
+            mvn clean install -Dapplication.server.port=8080
+        -->
+
+        <application.name>${artifactId}</application.name>
+
+        <application.server.port>3333</application.server.port>
+
+        <eureka.host>localhost</eureka.host>
+        <eureka.port>8761</eureka.port>
+
+    </properties>
+
     <!-- Dependencies Section -->
 
     <dependencies>
@@ -70,6 +87,17 @@
     <!-- Build -->
 
     <build>
+
+        <!--
+            Replace placeholders of resource files by Maven properties.
+            More information: https://maven.apache.org/pom.html#Resources
+        -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
 
         <!-- Plugins Section -->
 

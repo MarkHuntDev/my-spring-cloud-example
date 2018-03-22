@@ -1,19 +1,7 @@
 server:
-  port: ${PORT:3333}
-
-spring:
-  application:
-    name: celebrity-service
+  port: ${application.server.port}
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-
----
-spring:
-  profiles: test
-
-ribbon:
-  eureka:
-    enabled: false
+      defaultZone: http://${eureka.host}:${eureka.port}/eureka/

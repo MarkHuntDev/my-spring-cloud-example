@@ -1,0 +1,6 @@
+# bootstrap.yml is loaded before application.yml, it's important when used Spring Cloud Config
+# more information: http://cloud.spring.io/spring-cloud-config/multi/multi__spring_cloud_config_client.html#config-first-bootstrap
+
+spring:
+  application:
+    name: ${application.name}
