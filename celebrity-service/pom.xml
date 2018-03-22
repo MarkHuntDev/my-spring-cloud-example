@@ -70,12 +70,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>io.specto</groupId>
-            <artifactId>hoverfly-java</artifactId>
-            <scope>test</scope>
-        </dependency>
-
         <!-- Utils -->
         <dependency>
             <groupId>org.projectlombok</groupId>
