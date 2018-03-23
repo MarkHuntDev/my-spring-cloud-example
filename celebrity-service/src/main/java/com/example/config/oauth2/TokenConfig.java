@@ -1,6 +1,7 @@
 package com.example.config.oauth2;
 
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -14,11 +15,14 @@ import java.io.IOException;
 @Configuration
 public class TokenConfig {
 
+    @Value("${security.publicKey.filename}")
+    private String publicKeyFilename;
+
     @Bean
     JwtAccessTokenConverter accessTokenConverter() {
         final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
 
-        Resource resource = new ClassPathResource("pubkey");
+        Resource resource = new ClassPathResource(this.publicKeyFilename);
         String publicKey;
         try {
             publicKey = IOUtils.toString(resource.getInputStream(), "UTF-8");
@@ -32,7 +36,7 @@ public class TokenConfig {
 
     @Bean
     TokenStore tokenStore() {
-        return new JwtTokenStore(accessTokenConverter());
+        return new JwtTokenStore(this.accessTokenConverter());
     }
 }
 

@@ -26,6 +26,8 @@
         <eurekaHost>localhost</eurekaHost>
         <eurekaPort>8761</eurekaPort>
 
+        <securityPublicKeyFilename>pubkey</securityPublicKeyFilename>
+
     </properties>
 
     <!-- Dependencies Section -->
