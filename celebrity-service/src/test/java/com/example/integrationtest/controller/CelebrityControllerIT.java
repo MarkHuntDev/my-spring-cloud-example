@@ -1,8 +1,8 @@
 package com.example.integrationtest.controller;
 
 import com.example.controller.CelebrityController;
+import com.example.entity.Celebrity;
 import com.example.integrationtest.config.oauth2mock.WithMockOAuth2Jwt;
-import com.example.model.Celebrity;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

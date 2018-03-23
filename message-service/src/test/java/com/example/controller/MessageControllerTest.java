@@ -9,8 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.example.feign.CelebrityClient;
 import com.example.feign.GreetingClient;
-import com.example.model.Celebrity;
-import com.example.model.Greeting;
+import com.example.dto.Celebrity;
+import com.example.dto.Greeting;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;

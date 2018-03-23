@@ -2,9 +2,9 @@ package com.example.controller;
 
 import com.example.feign.CelebrityClient;
 import com.example.feign.GreetingClient;
-import com.example.model.Celebrity;
-import com.example.model.Greeting;
-import com.example.model.Message;
+import com.example.dto.Celebrity;
+import com.example.dto.Greeting;
+import com.example.dto.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;

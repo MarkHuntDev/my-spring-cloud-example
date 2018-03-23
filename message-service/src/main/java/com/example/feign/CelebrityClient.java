@@ -1,6 +1,6 @@
 package com.example.feign;
 
-import com.example.model.Celebrity;
+import com.example.dto.Celebrity;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

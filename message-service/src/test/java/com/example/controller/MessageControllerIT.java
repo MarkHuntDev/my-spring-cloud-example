@@ -5,9 +5,9 @@ import static io.specto.hoverfly.junit.dsl.HoverflyDsl.service;
 import static io.specto.hoverfly.junit.dsl.ResponseCreators.success;
 
 import com.example.config.JacksonConfig;
-import com.example.model.Celebrity;
-import com.example.model.Greeting;
-import com.example.model.Message;
+import com.example.dto.Celebrity;
+import com.example.dto.Greeting;
+import com.example.dto.Message;
 import io.specto.hoverfly.junit.rule.HoverflyRule;
 import org.junit.Assert;
 import org.junit.ClassRule;
