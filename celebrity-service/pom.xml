@@ -16,15 +16,15 @@
         <!--
             Application Configuration Properties.
             These properties replace appropriate placeholders of resource files.
-            Also they're can be overrode by command-line arguments, for example:
-            mvn clean install -Dapplication.server.port=8080
+            Also their values can be overrode by command-line arguments, for example:
+            mvn clean install -DapplicationServerPort=8080
         -->
 
-        <application.name>${artifactId}</application.name>
-        <application.server.port>3333</application.server.port>
+        <applicationName>${artifactId}</applicationName>
+        <applicationServerPort>9999</applicationServerPort>
 
-        <eureka.host>localhost</eureka.host>
-        <eureka.port>8761</eureka.port>
+        <eurekaHost>localhost</eurekaHost>
+        <eurekaPort>8761</eurekaPort>
 
     </properties>
 

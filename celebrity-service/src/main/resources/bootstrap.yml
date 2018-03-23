@@ -3,4 +3,4 @@
 
 spring:
   application:
-    name: ${application.name}
+    name: ${applicationName}

@@ -1,7 +1,7 @@
 server:
-  port: ${application.server.port}
+  port: ${applicationServerPort}
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://${eureka.host}:${eureka.port}/eureka/
+      defaultZone: http://${eurekaHost}:${eurekaPort}/eureka/
