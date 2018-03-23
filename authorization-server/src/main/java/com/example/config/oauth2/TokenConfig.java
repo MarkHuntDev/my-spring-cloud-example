@@ -5,20 +5,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
 import java.util.List;
 
 @Configuration
 public class TokenConfig {
 
-    @Value("${signing-key:test123}")
-    private String signingKey;
+    /**
+     * Alias of keystore.
+     */
+    @Value("${security.keystore.alias}")
+    private String keyStoreAlias;
 
+    /**
+     * Filename of keystore.
+     */
+    @Value("${security.keystore.filename}")
+    private String keyStoreFileName;
+
+    /**
+     * Passphrase of keystore.
+     */
+    @Value("${security.keystore.passphrase}")
+    private String keyStorePassphrase;
+
+    /**
+     * All {@link TokenEnhancer}s which process {@code JWT}.
+     */
     private List<TokenEnhancer> tokenEnhancers;
 
     @Autowired
@@ -29,19 +49,19 @@ public class TokenConfig {
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey(this.signingKey);
+        converter.setKeyPair(this.keyStoreKeyFactory().getKeyPair(this.keyStoreAlias));
         return converter;
     }
 
     @Bean
     public TokenStore tokenStore() {
-        return new JwtTokenStore(accessTokenConverter());
+        return new JwtTokenStore(this.accessTokenConverter());
     }
 
     @Bean
     public TokenEnhancerChain tokenEnhancerChain() {
         TokenEnhancerChain chain = new TokenEnhancerChain();
-        chain.setTokenEnhancers(allTokenEnhancers());
+        chain.setTokenEnhancers(this.allTokenEnhancers());
         return chain;
     }
 
@@ -49,7 +69,12 @@ public class TokenConfig {
         return ImmutableList
                 .<TokenEnhancer>builder()
                 .addAll(this.tokenEnhancers)
-                .add(accessTokenConverter())
+                // JwtAccessTokenConverter must be at the end of enhancers list
+                .add(this.accessTokenConverter())
                 .build();
+    }
+
+    private KeyStoreKeyFactory keyStoreKeyFactory() {
+        return new KeyStoreKeyFactory(new ClassPathResource(this.keyStoreFileName), this.keyStorePassphrase.toCharArray());
     }
 }

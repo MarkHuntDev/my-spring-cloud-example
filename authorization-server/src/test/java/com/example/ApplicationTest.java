@@ -23,6 +23,6 @@ public class ApplicationTest {
 
     @Test
     public void test() {
-        Assert.assertTrue(context.isActive());
+        Assert.assertTrue(this.context.isActive());
     }
 }

@@ -14,13 +14,13 @@
     <properties>
 
         <!--
-            These properties replace same placeholders of resource files.
+            Application Configuration Properties.
+            These properties replace appropriate placeholders of resource files.
             Also they're can be overrode by command-line arguments, for example:
             mvn clean install -Dapplication.server.port=8080
         -->
 
         <application.name>${artifactId}</application.name>
-
         <application.server.port>3333</application.server.port>
 
         <eureka.host>localhost</eureka.host>
@@ -74,6 +74,11 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
         </dependency>
 
     </dependencies>
