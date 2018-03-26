@@ -1,4 +1,4 @@
-package com.example.integrationtest.config;
+package com.example.config;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;

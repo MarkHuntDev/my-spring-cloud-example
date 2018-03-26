@@ -1,4 +1,4 @@
-package com.example.integrationtest.config.oauth2mock;
+package com.example.config.oauth2mock;
 
 import org.springframework.security.test.context.support.WithSecurityContext;
 
