@@ -4,6 +4,7 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -18,8 +19,9 @@ public class TokenConfig {
     @Value("${security.publicKey.filename}")
     private String publicKeyFilename;
 
-    @Bean
-    JwtAccessTokenConverter accessTokenConverter() {
+    @Profile("default")
+    @Bean("accessTokenConverter")
+    JwtAccessTokenConverter accessTokenConverterDefault() {
         final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
 
         Resource resource = new ClassPathResource(this.publicKeyFilename);
@@ -34,9 +36,17 @@ public class TokenConfig {
         return converter;
     }
 
+    @Profile("test")
+    @Bean("accessTokenConverter")
+    JwtAccessTokenConverter accessTokenConverterTest() {
+        final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        converter.setSigningKey("test123");
+        return converter;
+    }
+
     @Bean
     TokenStore tokenStore() {
-        return new JwtTokenStore(this.accessTokenConverter());
+        return new JwtTokenStore(this.accessTokenConverterDefault());
     }
 }
 
