@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <!-- Tag DB -->
+    <changeSet author="me" id="tag__insert__celebrities_1">
+        <tagDatabase tag="before__insert__celebrities_1"/>
+    </changeSet>
+
+    <!-- INSERT -->
+    <changeSet author="me" id="insert__celebrities_1">
+
+        <insert tableName="celebrities">
+            <column name="id" value="1"/>
+            <column name="name" value="Chuck Norris"/>
+        </insert>
+
+        <insert tableName="celebrities">
+            <column name="id" value="2"/>
+            <column name="name" value="Ornella Muti"/>
+        </insert>
+
+        <insert tableName="celebrities">
+            <column name="id" value="3"/>
+            <column name="name" value="Adriano Celentano"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="celebrities">
+                <where>id IN (1,2,3)</where>
+            </delete>
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>

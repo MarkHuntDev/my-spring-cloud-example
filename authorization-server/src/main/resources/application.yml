@@ -1,19 +1,19 @@
 server:
-  port: ${applicationServerPort}
+  port: ${applicationServerPort:9999}
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://${eurekaHost}:${eurekaPort}/eureka/
+      defaultZone: http://${eurekaHost:localhost}:${eurekaPort:8761}/eureka/
 
 # Application Custom Properties
 security:
   keystore:
-    alias: ${securityKeystoreAlias}
-    filename: ${securityKeystoreFilename}
-    passphrase: ${securityKeystorePassphrase}
+    alias: ${securityKeystoreAlias:mytest}
+    filename: ${securityKeystoreFilename:mytest.jks}
+    passphrase: ${securityKeystorePassphrase:mypass}
 
 oauth2:
-  clientId: ${oauth2ClientId}
-  clientSecret: ${oauth2ClientSecret}
-  scope: ${oauth2Scope}
+  clientId: ${oauth2ClientId:client-example}
+  clientSecret: ${oauth2ClientSecret:client-secret}
+  scope: ${oauth2Scope:message-service}

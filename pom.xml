@@ -79,6 +79,9 @@
         <pluginManagement>
 
             <plugins>
+
+                <!-- Spring Boot plugin -->
+
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
@@ -94,6 +97,15 @@
 
                     </executions>
                 </plugin>
+
+                <!-- Liquibase plugin -->
+
+                <plugin>
+                    <groupId>org.liquibase</groupId>
+                    <artifactId>liquibase-maven-plugin</artifactId>
+                    <version>3.5.3</version>
+                </plugin>
+
             </plugins>
 
         </pluginManagement>

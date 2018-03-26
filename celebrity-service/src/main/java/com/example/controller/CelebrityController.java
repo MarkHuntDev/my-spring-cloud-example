@@ -1,6 +1,8 @@
 package com.example.controller;
 
 import com.example.entity.Celebrity;
+import com.example.repository.CelebrityRepository;
+import org.apache.commons.math3.random.RandomDataGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,20 +18,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 @RestController
 @RequestMapping("/celebrities")
 public class CelebrityController {
 
-    private static List<Celebrity> celebrities = Arrays.asList(
-            new Celebrity().setName("Chuck Norris"),
-            new Celebrity().setName("Ornella Muti"),
-            new Celebrity().setName("Adriano Chelentano")
-    );
+    private CelebrityRepository repository;
+
+    @Autowired
+    public void setRepository(CelebrityRepository repository) {
+        this.repository = repository;
+    }
 
     private TokenStore tokenStore;
 
@@ -41,21 +42,21 @@ public class CelebrityController {
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public List<Celebrity> celebrities() {
-        return celebrities;
+        return this.repository.findAll();
     }
 
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Celebrity celebrity(@PathVariable("id") Integer id) {
-        return celebrities.get(id);
+    public Celebrity celebrity(@PathVariable("id") Long id) {
+        return this.repository.findOne(id);
     }
 
     @RequestMapping(value = "/random", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Celebrity randomCelebrity() {
-        if (celebrities.isEmpty()) {
+        if (this.repository.count() == 0) {
             return new Celebrity();
         }
-        return celebrities.get(randomCelebrityIndex());
+        return this.repository.findOne(randomCelebrityIndex());
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -74,7 +75,7 @@ public class CelebrityController {
         return celebrity;
     }
 
-    private static int randomCelebrityIndex() {
-        return new Random().nextInt(celebrities.size());
+    private long randomCelebrityIndex() {
+        return new RandomDataGenerator().nextLong(1, repository.count());
     }
 }

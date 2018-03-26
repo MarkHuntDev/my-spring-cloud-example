@@ -11,31 +11,6 @@
 
     <artifactId>authorization-server</artifactId>
 
-    <properties>
-
-        <!--
-            Application Configuration Properties.
-            These properties replace appropriate placeholders of resource files.
-            Also their values can be overrode by command-line arguments, for example:
-            mvn clean install -DapplicationServerPort=8080
-        -->
-
-        <applicationName>${artifactId}</applicationName>
-        <applicationServerPort>9999</applicationServerPort>
-
-        <eurekaHost>localhost</eurekaHost>
-        <eurekaPort>8761</eurekaPort>
-
-        <securityKeystoreAlias>mytest</securityKeystoreAlias>
-        <securityKeystoreFilename>mytest.jks</securityKeystoreFilename>
-        <securityKeystorePassphrase>mypass</securityKeystorePassphrase>
-
-        <oauth2ClientId>clientExample</oauth2ClientId>
-        <oauth2ClientSecret>clientSecret</oauth2ClientSecret>
-        <oauth2Scope>message-service</oauth2Scope>
-
-    </properties>
-
     <!-- Dependencies Section -->
 
     <dependencies>
@@ -101,32 +76,6 @@
     <!-- Build -->
 
     <build>
-
-        <!--
-            Replace placeholders of resource files by Maven properties.
-            More information: https://maven.apache.org/pom.html#Resources
-        -->
-        <resources>
-
-            <!-- copy all resource files with filtering except *.jks to avoid corrupting them -->
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-                <excludes>
-                    <exclude>*.jks</exclude>
-                </excludes>
-            </resource>
-
-            <!-- copy only *.jks files without filtering -->
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>false</filtering>
-                <includes>
-                    <include>*.jks</include>
-                </includes>
-            </resource>
-
-        </resources>
 
         <!-- Plugins Section -->
 

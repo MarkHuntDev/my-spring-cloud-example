@@ -1,5 +1,6 @@
 package com.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.data.domain.Persistable;
@@ -9,6 +10,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 abstract class BaseEntity implements Persistable<Long> {
 
+    @JsonIgnore
     @Override
     public boolean isNew() {
         return this.getId() == null;

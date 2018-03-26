@@ -3,4 +3,4 @@
 
 spring:
   application:
-    name: ${applicationName}
+    name: ${applicationName:authorization-server}

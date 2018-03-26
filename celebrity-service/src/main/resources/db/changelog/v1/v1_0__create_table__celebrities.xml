@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <!-- Tag DB -->
+    <changeSet author="me" id="tag__create_table__celebrities">
+        <tagDatabase tag="before__create_table__celebrities"/>
+    </changeSet>
+
+    <!-- Create TABLE -->
+    <changeSet author="me" id="create_table__celebrities">
+
+        <createTable tableName="celebrities" remarks="Celebrities">
+
+            <column name="id"
+                    type="java.sql.Types.BIGINT"
+                    remarks="Unique identifier">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="celebrities_pk"/>
+            </column>
+
+            <column name="name"
+                    type="java.sql.Types.VARCHAR"
+                    remarks="Full name of celebrity">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+    </changeSet>
+
+    <!-- Tag DB -->
+    <changeSet author="me" id="tag__create_index__index__celebrities__name">
+        <tagDatabase tag="before__create_index__index__celebrities__name"/>
+    </changeSet>
+
+    <!-- Create INDEX -->
+    <changeSet author="me" id="create_index__index__celebrities__name">
+        <createIndex indexName="index__celebrities__name"
+                     tableName="celebrities"
+                     unique="false">
+            <column name="name"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>
