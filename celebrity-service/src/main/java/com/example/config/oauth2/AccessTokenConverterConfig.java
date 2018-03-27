@@ -7,19 +7,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import java.io.IOException;
 
 @Configuration
-public class TokenConfig {
+public class AccessTokenConverterConfig {
 
     @Value("${security.publicKey.filename}")
     private String publicKeyFilename;
 
-    @Profile("default")
+    @Profile(value = {"default", "local"})
     @Bean("accessTokenConverter")
     JwtAccessTokenConverter accessTokenConverterDefault() {
         final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
@@ -42,11 +40,6 @@ public class TokenConfig {
         final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setSigningKey("test123");
         return converter;
-    }
-
-    @Bean
-    TokenStore tokenStore() {
-        return new JwtTokenStore(this.accessTokenConverterDefault());
     }
 }
 
