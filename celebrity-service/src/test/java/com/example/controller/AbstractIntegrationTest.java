@@ -9,7 +9,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.BindMode;
+import org.testcontainers.containers.GenericContainer;
 
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
@@ -18,18 +19,23 @@ import org.testcontainers.containers.PostgreSQLContainer;
 public abstract class AbstractIntegrationTest {
 
     @ClassRule
-    public static PostgreSQLContainer postgres = new PostgreSQLContainer("postgres:10.1")
-            .withDatabaseName("celebrity_service")
-            .withUsername("cs_user")
-            .withPassword("cs_pass");
+    public static GenericContainer postgres = new GenericContainer("postgres:10.3")
+            .withExposedPorts(5432)
+            .withEnv("POSTGRES_DB", "message_service")
+            .withEnv("POSTGRES_USER", "ms_user")
+            .withEnv("POSTGRES_PASSWORD", "ms_pass")
+            .withClasspathResourceMapping("create_db_roles.sql", "/docker-entrypoint-initdb.d/create_db_roles.sql", BindMode.READ_ONLY);
 
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
         @Override
         public void initialize(ConfigurableApplicationContext applicationContext) {
             EnvironmentTestUtils.addEnvironment("testcontainers", applicationContext.getEnvironment(),
-                    "spring.datasource.url=" + postgres.getJdbcUrl(),
-                    "spring.datasource.username=" + postgres.getUsername(),
-                    "spring.datasource.password=" + postgres.getPassword());
+                    "spring.datasource.url=jdbc:postgresql://localhost:" + postgres.getFirstMappedPort() + "/message_service?currentSchema=cs",
+                    "spring.datasource.username=cs_user2",
+                    "spring.datasource.password=cs_pass2",
+                    "liquibase.url=jdbc:postgresql://localhost:" + postgres.getFirstMappedPort() + "/message_service?currentSchema=cs",
+                    "liquibase.user=cs_user1",
+                    "liquibase.password=cs_pass1");
         }
     }
 
