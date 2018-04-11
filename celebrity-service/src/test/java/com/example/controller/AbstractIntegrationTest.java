@@ -27,13 +27,20 @@ public abstract class AbstractIntegrationTest {
             .withClasspathResourceMapping("create_db_roles.sql", "/docker-entrypoint-initdb.d/create_db_roles.sql", BindMode.READ_ONLY);
 
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+
+        /*private static final String JDBC_URL =
+                String.format("jdbc:postgresql://localhost:%d/message_service?currentSchema=cs", postgres.getFirstMappedPort());*/
+
+        private static final String JDBC_URL =
+                String.format("jdbc:postgresql://%s:%d/message_service?currentSchema=cs", postgres.getContainerIpAddress(), postgres.getFirstMappedPort());
+
         @Override
         public void initialize(ConfigurableApplicationContext applicationContext) {
             EnvironmentTestUtils.addEnvironment("testcontainers", applicationContext.getEnvironment(),
-                    "spring.datasource.url=jdbc:postgresql://localhost:" + postgres.getFirstMappedPort() + "/message_service?currentSchema=cs",
+                    "spring.datasource.url=" + JDBC_URL,
                     "spring.datasource.username=cs_user2",
                     "spring.datasource.password=cs_pass2",
-                    "liquibase.url=jdbc:postgresql://localhost:" + postgres.getFirstMappedPort() + "/message_service?currentSchema=cs",
+                    "liquibase.url=" + JDBC_URL,
                     "liquibase.user=cs_user1",
                     "liquibase.password=cs_pass1");
         }
