@@ -22,7 +22,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@ActiveProfiles({"method-security-test", "test"})
+@ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {
         TestOAuth2JwtConfig.class, TokenStoreConfig.class, AccessTokenConverterConfig.class, CelebrityController.class,
