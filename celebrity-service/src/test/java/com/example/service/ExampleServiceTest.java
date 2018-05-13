@@ -1,6 +1,5 @@
 package com.example.service;
 
-import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +18,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.security.Principal;
 
-@Slf4j
 @ActiveProfiles("method-security-test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {ExampleService.class, ExampleServiceTest.MethodSecurityConfiguration.class})
