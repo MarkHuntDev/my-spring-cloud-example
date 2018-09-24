@@ -1,7 +1,5 @@
 ribbon:
   eureka:
-    # Disable Eureka use in Ribbon
-    # https://cloud.spring.io/spring-cloud-netflix/multi/multi_spring-cloud-ribbon.html#_example_disable_eureka_use_in_ribbon
     enabled: false
 
 liquibase:
