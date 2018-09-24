@@ -3,7 +3,9 @@ package com.example.controller;
 import com.example.entity.Celebrity;
 import com.example.repository.CelebrityRepository;
 import org.apache.commons.math3.random.RandomDataGenerator;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,11 +34,11 @@ public class CelebrityController {
         this.repository = repository;
     }
 
-    private TokenStore tokenStore;
+    private ApplicationContext applicationContext;
 
     @Autowired
-    public void setTokenStore(TokenStore tokenStore) {
-        this.tokenStore = tokenStore;
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -62,6 +64,13 @@ public class CelebrityController {
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/random-with-test-property", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Celebrity randomCelebrityWithTestProperty() {
+        TokenStore tokenStore;
+        try {
+            tokenStore = this.applicationContext.getBean(TokenStore.class);
+        } catch (NoSuchBeanDefinitionException ex) {
+            throw ex;
+        }
+
         Celebrity celebrity = randomCelebrity();
 
         OAuth2Authentication auth = (OAuth2Authentication) SecurityContextHolder.getContext().getAuthentication();

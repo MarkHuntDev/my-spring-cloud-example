@@ -2,8 +2,8 @@ package com.example.controller;
 
 import com.example.config.ResourceServerConfiguration;
 import com.example.config.TestOAuth2JwtConfig;
-import com.example.config.oauth2.AccessTokenConverterConfig;
-import com.example.config.oauth2.TokenStoreConfig;
+import com.example.config.security.oauth2.AccessTokenConverterConfig;
+import com.example.config.security.oauth2.TokenStoreConfig;
 import com.example.config.oauth2mock.WithMockOAuth2Jwt;
 import com.example.entity.Celebrity;
 import com.example.repository.CelebrityRepository;
