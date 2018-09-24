@@ -11,11 +11,7 @@
 
     <artifactId>service-discovery</artifactId>
 
-    <!-- Dependencies Section -->
-
     <dependencies>
-
-        <!-- Service Discovery Server -->
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -24,11 +20,7 @@
 
     </dependencies>
 
-    <!-- Build -->
-
     <build>
-
-        <!-- Plugins Section -->
 
         <plugins>
             <plugin>
