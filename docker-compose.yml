@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:10.1
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: celebrity_service
+      POSTGRES_USER: cs_user
+      POSTGRES_PASSWORD: cs_pass
