@@ -1,11 +1,11 @@
-server:  
+server:
   port: 8761
 
-eureka:  
+eureka:
   instance:
     hostname: localhost
   client:
-    registerWithEureka: false
-    fetchRegistry: false
+    registerWithEureka: false # Don't register with Eureka service
+    fetchRegistry: false # Don't cache register information locally when Eureka starts
   server:
-    enableSelfPreservation: false  
+    enableSelfPreservation: false
