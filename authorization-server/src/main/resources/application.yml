@@ -6,7 +6,6 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 
-# Application Custom Properties
 security:
   keystore:
     alias: mytest

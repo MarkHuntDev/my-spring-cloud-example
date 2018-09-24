@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 @Profile("test")
 @Configuration
 @EnableWebSecurity
-public class TestWebSecurityConfig /*extends WebSecurityConfigurerAdapter */ {
+public class TestWebSecurityConfig {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception { // @formatter:off
