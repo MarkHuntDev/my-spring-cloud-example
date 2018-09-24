@@ -3,4 +3,4 @@
 
 spring:
   application:
-    name: ${applicationName:celebrity-service}
+    name: celebrity-service
