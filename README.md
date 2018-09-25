@@ -1,5 +1,5 @@
 # The Celebrity Greeting System
-####  It's an example of Microservice Architecture based Spring Cloud
+####  It's an example of Microservice Architecture based on Spring Cloud
 
 Functional microservices have 2 independent spring-profiles:
  - **stand-alone**: a microservice interacts with stubs (without Service Discovery, Config Server and so on)
