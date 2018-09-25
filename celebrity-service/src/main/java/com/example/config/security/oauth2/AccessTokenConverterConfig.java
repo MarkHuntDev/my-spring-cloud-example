@@ -1,6 +1,7 @@
 package com.example.config.security.oauth2;
 
-import com.example.config.SpringProfile;
+import static com.example.config.SpringProfile.PROFILE_SECURED;
+
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -12,14 +13,13 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 
 import java.io.IOException;
 
-@Profile(SpringProfile.PROFILE_SECURED)
+@Profile(PROFILE_SECURED)
 @Configuration
 public class AccessTokenConverterConfig {
 
     @Value("${security.publicKey.filename}")
     private String publicKeyFilename;
 
-    @Profile(SpringProfile.PROFILE_DEPENDENT)
     @Bean("accessTokenConverter")
     JwtAccessTokenConverter accessTokenConverterDefault() {
         final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
@@ -33,14 +33,6 @@ public class AccessTokenConverterConfig {
         }
 
         converter.setVerifierKey(publicKey);
-        return converter;
-    }
-
-    @Profile(SpringProfile.PROFILE_TEST)
-    @Bean("accessTokenConverter")
-    JwtAccessTokenConverter accessTokenConverterTest() {
-        final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey("test123");
         return converter;
     }
 }

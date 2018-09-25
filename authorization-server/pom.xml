@@ -11,11 +11,9 @@
 
     <artifactId>authorization-server</artifactId>
 
-    <!-- Dependencies Section -->
-
     <dependencies>
 
-        <!-- Spring Boot -->
+        <!-- Spring Boot & Spring Cloud -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -26,8 +24,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
         </dependency>
-
-        <!-- Spring Cloud -->
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -73,11 +69,7 @@
 
     </dependencies>
 
-    <!-- Build -->
-
     <build>
-
-        <!-- Plugins Section -->
 
         <plugins>
 
