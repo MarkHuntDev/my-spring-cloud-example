@@ -1,4 +1,4 @@
-# The Celebrity Greeting System
+# Celebrity Greeting System
 ####  It's an example of Microservice Architecture based on Spring Cloud
 
 Functional microservices have 2 independent spring-profiles:
