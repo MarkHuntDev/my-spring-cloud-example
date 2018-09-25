@@ -6,6 +6,10 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 
+spring:
+  profiles:
+    active: stand-alone
+
 security:
   keystore:
     alias: mytest

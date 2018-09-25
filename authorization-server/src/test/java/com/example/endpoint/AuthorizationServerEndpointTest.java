@@ -1,5 +1,6 @@
 package com.example.endpoint;
 
+import static com.example.config.SpringProfile.PROFILE_TEST;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -16,7 +17,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-@ActiveProfiles("test")
+@ActiveProfiles(PROFILE_TEST)
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AuthorizationServerEndpointTest {
@@ -36,7 +37,7 @@ public class AuthorizationServerEndpointTest {
         // @formatter:off
         Response jwtResponse = RestAssured
                 .given().auth().preemptive().basic(this.oAuth2ClientId, this.oAuth2ClientSecret)
-                  .and()
+                .and()
                 .with()
                 .params(this.accessTokenObtainingRequestParams())
                 .when()
