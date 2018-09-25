@@ -10,6 +10,7 @@ spring:
 
 liquibase:
   enabled: true
+  change-log: classpath:db/changelog/db_changelog_master.xml
 
 # custom configs
 security:
