@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.config.SpringProfile;
 import org.junit.ClassRule;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.BindMode;
 import org.testcontainers.containers.GenericContainer;
 
-@ActiveProfiles("test")
+@ActiveProfiles(SpringProfile.PROFILE_TEST)
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(initializers = AbstractIntegrationTest.Initializer.class)
@@ -27,9 +28,6 @@ public abstract class AbstractIntegrationTest {
             .withClasspathResourceMapping("create_db_roles.sql", "/docker-entrypoint-initdb.d/create_db_roles.sql", BindMode.READ_ONLY);
 
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-
-        /*private static final String JDBC_URL =
-                String.format("jdbc:postgresql://localhost:%d/message_service?currentSchema=cs", postgres.getFirstMappedPort());*/
 
         private static final String JDBC_URL =
                 String.format("jdbc:postgresql://%s:%d/message_service?currentSchema=cs", postgres.getContainerIpAddress(), postgres.getFirstMappedPort());

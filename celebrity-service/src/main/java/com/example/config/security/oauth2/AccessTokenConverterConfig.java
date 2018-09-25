@@ -12,14 +12,14 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 
 import java.io.IOException;
 
-@Profile(SpringProfile.PROFILE_NOT_NO_SECURITY)
+@Profile(SpringProfile.PROFILE_SECURED)
 @Configuration
 public class AccessTokenConverterConfig {
 
     @Value("${security.publicKey.filename}")
     private String publicKeyFilename;
 
-    @Profile(SpringProfile.PROFILE_DEFAULT)
+    @Profile(SpringProfile.PROFILE_DEPENDENT)
     @Bean("accessTokenConverter")
     JwtAccessTokenConverter accessTokenConverterDefault() {
         final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();

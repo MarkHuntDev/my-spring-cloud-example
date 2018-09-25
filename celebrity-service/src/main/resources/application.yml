@@ -4,19 +4,5 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
 
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost/celebrity_service
-    username: cs_user
-    password: cs_pass
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    show-sql: true
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-
-liquibase:
-  enabled: false
-
-# Application Custom Properties
-security:
-  publicKey:
-    filename: pubkey
+  profiles:
+    active: stand-alone, no-security

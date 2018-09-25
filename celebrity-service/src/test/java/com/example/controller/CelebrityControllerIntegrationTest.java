@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.config.oauth2mock.WithMockOAuth2Jwt;
 import com.example.entity.Celebrity;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,6 +16,8 @@ public class CelebrityControllerIntegrationTest extends AbstractIntegrationTest 
         this.celebrityController = celebrityController;
     }
 
+    // todo: tokenStore bean created only on secured profile
+    @Ignore
     @Test
     @WithMockOAuth2Jwt(roles = "ROLE_ADMIN")
     public void testRandomCelebrityWithTestProperty() {

@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
-@Profile(SpringProfile.PROFILE_NOT_NO_SECURITY)
+@Profile(SpringProfile.PROFILE_SECURED)
 @Configuration
 public class TokenStoreConfig {
 
