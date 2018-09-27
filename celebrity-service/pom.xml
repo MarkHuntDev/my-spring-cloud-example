@@ -15,11 +15,9 @@
         <testcontainers.version>1.6.0</testcontainers.version>
     </properties>
 
-    <!-- Dependencies Section -->
-
     <dependencies>
 
-        <!-- Spring Boot -->
+        <!-- Spring Boot & Spring Cloud -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -34,9 +32,8 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
         </dependency>
-
-        <!-- Spring Cloud -->
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -46,6 +43,18 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <!-- Database -->
@@ -59,20 +68,6 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-        </dependency>
-
-        <!-- Testing -->
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <!-- TestContainers -->
@@ -90,6 +85,7 @@
         </dependency>
 
         <!-- Utils -->
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -113,29 +109,20 @@
 
     </dependencies>
 
-    <!-- Build -->
-
     <build>
-
-        <!-- Plugins Section -->
-
         <plugins>
-
-            <!-- Spring Boot plugin -->
 
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- Liquibase plugin -->
-
             <plugin>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <configuration>
                     <driver>org.postgresql.Driver</driver>
-                    <url>jdbc:postgresql://localhost/celebrity_service</url>
+                    <url>jdbc:postgresql://localhost/celebrity_service?currentSchema=celebrity</url>
                     <username>cs_user</username>
                     <password>cs_pass</password>
                     <changeLogFile>src/main/resources/db/changelog/db_changelog_master.xml</changeLogFile>

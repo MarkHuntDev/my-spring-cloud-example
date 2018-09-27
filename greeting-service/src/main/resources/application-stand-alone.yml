@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost/celebrity_service?currentSchema=celebrity
-    username: cs_user
-    password: cs_pass
+    url: jdbc:postgresql://localhost/greeting_service?currentSchema=greeting
+    username: gs_user
+    password: gs_pass
     driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true

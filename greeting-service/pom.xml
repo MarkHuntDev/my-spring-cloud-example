@@ -11,11 +11,9 @@
 
     <artifactId>greeting-service</artifactId>
 
-    <!-- Dependencies Section -->
-
     <dependencies>
 
-        <!-- Spring Boot -->
+        <!-- Spring Boot & Spring Cloud -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -24,15 +22,9 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
         </dependency>
-
-        <!-- Spring Cloud -->
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -43,8 +35,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
         </dependency>
-
-        <!-- Testing -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -58,7 +48,21 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Database -->
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.1.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+
         <!-- Utils -->
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -82,21 +86,13 @@
 
     </dependencies>
 
-    <!-- Build -->
-
     <build>
-
-        <!-- Plugins Section -->
-
         <plugins>
-
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-
         </plugins>
-
     </build>
 
 </project>

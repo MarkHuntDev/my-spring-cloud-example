@@ -1,4 +1,4 @@
-package com.example.config.oauth2;
+package com.example.config.security.oauth2;
 
 import com.google.common.collect.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
