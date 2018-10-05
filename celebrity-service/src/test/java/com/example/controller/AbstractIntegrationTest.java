@@ -30,7 +30,8 @@ public abstract class AbstractIntegrationTest {
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
         private static final String JDBC_URL =
-                String.format("jdbc:postgresql://%s:%d/message_service?currentSchema=cs", postgres.getContainerIpAddress(), postgres.getFirstMappedPort());
+                String.format("jdbc:postgresql://%s:%d/message_service?currentSchema=cs",
+                        postgres.getContainerIpAddress(), postgres.getFirstMappedPort());
 
         @Override
         public void initialize(ConfigurableApplicationContext applicationContext) {
