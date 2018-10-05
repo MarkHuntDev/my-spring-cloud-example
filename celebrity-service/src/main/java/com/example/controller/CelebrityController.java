@@ -2,10 +2,10 @@ package com.example.controller;
 
 import com.example.entity.Celebrity;
 import com.example.repository.CelebrityRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.math3.random.RandomDataGenerator;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,23 +25,13 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/celebrities")
 public class CelebrityController {
 
-    private CelebrityRepository repository;
-
-    @Autowired
-    public void setRepository(CelebrityRepository repository) {
-        this.repository = repository;
-    }
-
-    private ApplicationContext applicationContext;
-
-    @Autowired
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    }
+    private final ApplicationContext applicationContext;
+    private final CelebrityRepository repository;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseStatus(HttpStatus.OK)
