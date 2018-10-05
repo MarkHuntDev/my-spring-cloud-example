@@ -1,6 +1,6 @@
 package com.example.endpoint;
 
-import static com.example.config.SpringProfile.PROFILE_TEST;
+import static com.example.config.SpringProfile.PROFILE_STAND_ALONE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-@ActiveProfiles(PROFILE_TEST)
+@ActiveProfiles(PROFILE_STAND_ALONE)
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AuthorizationServerEndpointTest {

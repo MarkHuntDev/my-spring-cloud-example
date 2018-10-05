@@ -12,11 +12,6 @@ public class SpringProfile {
      */
     public static final String PROFILE_DEPENDENT = "dependent";
 
-    /**
-     * Uses by tests.
-     */
-    public static final String PROFILE_TEST = "test";
-
     private SpringProfile() {
     }
 }
