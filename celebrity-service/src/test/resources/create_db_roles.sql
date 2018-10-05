@@ -2,7 +2,7 @@
 CREATE ROLE cs_user1 LOGIN PASSWORD 'cs_pass1';
 CREATE ROLE cs_user2 LOGIN PASSWORD 'cs_pass2';
 
--- make cs_user1 the owner of message_service db
+-- make cs_user1 the owner of celebrity_service db
 ALTER DATABASE message_service OWNER TO cs_user1;
 
 -- create schema cs with cs_user1 owner
