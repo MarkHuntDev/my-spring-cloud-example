@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.entity.Celebrity;
 import com.example.repository.CelebrityRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.math3.random.RandomDataGenerator;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +15,16 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/celebrities")
 public class CelebrityController {
@@ -41,19 +43,19 @@ public class CelebrityController {
         this.applicationContext = applicationContext;
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public List<Celebrity> celebrities() {
         return this.repository.findAll();
     }
 
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Celebrity celebrity(@PathVariable("id") Long id) {
         return this.repository.findOne(id);
     }
 
-    @RequestMapping(value = "/random", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/random", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Celebrity randomCelebrity() {
         if (this.repository.count() == 0) {
             return new Celebrity();
@@ -62,12 +64,13 @@ public class CelebrityController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @RequestMapping(value = "/random-with-test-property", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/random-with-test-property", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Celebrity randomCelebrityWithTestProperty() {
         TokenStore tokenStore;
         try {
             tokenStore = this.applicationContext.getBean(TokenStore.class);
         } catch (NoSuchBeanDefinitionException ex) {
+            log.error(ex.getLocalizedMessage(), ex);
             throw ex;
         }
 
