@@ -48,7 +48,7 @@ public class CelebrityController {
     @GetMapping(value = "/random", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Celebrity randomCelebrity() {
         if (this.repository.count() == 0) {
-            return new Celebrity();
+            throw new IllegalArgumentException("No celebrities found");
         }
         return this.repository.findOne(randomCelebrityIndex());
     }
