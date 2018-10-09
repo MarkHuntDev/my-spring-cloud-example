@@ -4,7 +4,6 @@ import com.example.entity.Celebrity;
 import com.example.repository.CelebrityRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.math3.random.RandomDataGenerator;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -78,6 +78,6 @@ public class CelebrityController {
     }
 
     private long randomCelebrityIndex() {
-        return new RandomDataGenerator().nextLong(1, repository.count());
+        return ThreadLocalRandom.current().nextLong(1, repository.count());
     }
 }
