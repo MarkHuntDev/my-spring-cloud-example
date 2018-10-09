@@ -1,47 +1,9 @@
-server:
-  port: 1111
-
-spring:
-  application:
-    name: message-service
-
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 
-ribbon:
-  eureka:
-    enabled: true
-
----
-spring:
-  profiles: local
-
-ribbon:
-  eureka:
-    enabled: false
-
-greeting-service:
-  ribbon:
-    listOfServers: localhost:2222
-
-celebrity-service:
-  ribbon:
-    listOfServers: localhost:3333
-
----
-spring:
-  profiles: stub
-
-ribbon:
-  eureka:
-    enabled: false
-
-greeting-service:
-  ribbon:
-    listOfServers: greeting-service:8080
-
-celebrity-service:
-  ribbon:
-    listOfServers: celebrity-service:8080
+# custom configs
+security:
+  publicKey:
+    filename: pubkey

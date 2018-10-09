@@ -5,7 +5,9 @@ services:
     image: postgres:10.1
     ports:
       - "5432:5432"
+    volumes:
+      - ./create_db_roles.sql:/docker-entrypoint-initdb.d/create_db_roles.sql
     environment:
-      POSTGRES_DB: celebrity_service
-      POSTGRES_USER: cs_user
-      POSTGRES_PASSWORD: cs_pass
+      POSTGRES_DB: message_service
+      POSTGRES_USER: ms_user
+      POSTGRES_PASSWORD: ms_pass

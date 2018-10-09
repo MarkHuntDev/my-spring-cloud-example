@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <!-- Tag DB -->
+    <changeSet author="me" id="tag__create_sequence__greetings_id_seq">
+        <tagDatabase tag="before__create_sequence__greetings_id_seq"/>
+    </changeSet>
+
+    <!-- INSERT -->
+    <changeSet author="me" id="create_sequence__greetings_id_seq">
+
+        <createSequence sequenceName="greetings_id_seq" startValue="5"/>
+
+    </changeSet>
+
+</databaseChangeLog>

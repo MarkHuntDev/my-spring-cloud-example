@@ -50,7 +50,7 @@ public class CelebrityController {
         if (this.repository.count() == 0) {
             throw new IllegalArgumentException("No celebrities found");
         }
-        return this.repository.findOne(randomCelebrityIndex());
+        return this.repository.findOne(ThreadLocalRandom.current().nextLong(1, repository.count()));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -75,9 +75,5 @@ public class CelebrityController {
 
         celebrity.setName(celebrity.getName() + " ; Test Property Value: " + testPropertyValue);
         return celebrity;
-    }
-
-    private long randomCelebrityIndex() {
-        return ThreadLocalRandom.current().nextLong(1, repository.count());
     }
 }

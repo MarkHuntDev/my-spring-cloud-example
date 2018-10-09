@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <!-- Tag DB -->
+    <changeSet author="me" id="tag__create_table__greetings">
+        <tagDatabase tag="before__create_table__greetings"/>
+    </changeSet>
+
+    <!-- Create TABLE -->
+    <changeSet author="me" id="create_table__greetings">
+
+        <createTable tableName="greetings" remarks="Greetings">
+
+            <column name="id"
+                    type="java.sql.Types.BIGINT"
+                    remarks="Unique identifier">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="greetings_pk"/>
+            </column>
+
+            <column name="value"
+                    type="java.sql.Types.VARCHAR"
+                    remarks="Greeting">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+    </changeSet>
+
+    <!-- Tag DB -->
+    <changeSet author="me" id="tag__create_index__index__greetings__value">
+        <tagDatabase tag="before__create_index__index__greetings__value"/>
+    </changeSet>
+
+    <!-- Create INDEX -->
+    <changeSet author="me" id="create_index__index__greetings__value">
+        <createIndex indexName="index__greetings__value"
+                     tableName="greetings"
+                     unique="false">
+            <column name="value"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>
